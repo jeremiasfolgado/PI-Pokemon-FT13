@@ -1,9 +1,11 @@
 const {Router} = require('express');
-const {getAllPokemons, addPokemon} = require('../Controllers/poke_control')
+const {getAllPokemons, addPokemon, getPokemonById} = require('../Controllers/poke_control')
 const router = Router();
 
 
 router.get('/', getAllPokemons)
+router.get('/:id', getPokemonById)
+
 router.post('/', addPokemon )
 
 
