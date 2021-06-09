@@ -3,42 +3,82 @@ const {Pokemon} = require('../db.js')
 const axios = require('axios')
 const {BASE_URL} = require('../../constants.js')
 const { v4: uuidv4 } = require('uuid');
+const { Op } = require("sequelize");
 //const { response } = require('express');
 
 
 //traer los primero doce pokemons
+
+
+
+
+
+//LISTO VIEJA EL GET POKEMON
+
+
+
+
 async function getAllPokemons (req, res, next){
     const result = [];
     const pokemonsDb = await Pokemon.findAll()
+    const name = req.query.name.toLowerCase()
+    
+    if(name){
+        try {
+            const callDb = await Pokemon.findOne({where: {name: {[Op.iLike]:name}}})
+            if(callDb) return res.json(callDb)   
+            const callQuery = await axios.get(`${BASE_URL}/${name}`)
+            const pokemon = {
+                name: callQuery.data.name,
+                 id: callQuery.data.id, 
+                 hp: callQuery.data.stats[0].base_stat,
+                 attack: callQuery.data.stats[1].base_stat,
+                 defense: callQuery.data.stats[2].base_stat,
+                 speed: callQuery.data.stats[5].base_stat,
+                 weight: callQuery.data.weight,
+                 height: callQuery.data.height
+            }
+            return res.json(pokemon)
+        } catch (error) {
+            next(error)
+        }
+    }
     try {
         const callOne = await axios.get(`${BASE_URL}`)
         const listCallOne = callOne.data.results.slice(0,12)
         for(let i = 0; i < listCallOne.length; i++){
-            //console.log(listCallOne[i].url)
-             let callTwo = await axios.get(`${listCallOne[i].url}`)
-             result.push({
-                 name: callTwo.data.name,
-                 id: callTwo.data.id, 
-                 hp: callTwo.data.stats[0].base_stat,
-                 attack: callTwo.data.stats[1].base_stat,
-                 defense: callTwo.data.stats[2].base_stat,
-                 speed: callTwo.data.stats[5].base_stat,
-                 weight: callTwo.data.weight,
-                 height: callTwo.data.height
-                })
-           }
-       } 
-       catch (error) {
-           next(error)
-       }
-       //console.log(pokemonsDb)
-       res.json(result.concat(pokemonsDb))
+            let callTwo = await axios.get(`${listCallOne[i].url}`)
+            result.push({
+                name: callTwo.data.name,
+                id: callTwo.data.id, 
+                hp: callTwo.data.stats[0].base_stat,
+                attack: callTwo.data.stats[1].base_stat,
+                defense: callTwo.data.stats[2].base_stat,
+                speed: callTwo.data.stats[5].base_stat,
+                weight: callTwo.data.weight,
+                height: callTwo.data.height
+               })
+          }
+      } 
+      catch (error) {
+          next(error)
+      }
+      return res.json(result.concat(pokemonsDb))
 }
+            
+      
 
-//Trae un solo pokemon 
+//Trae un solo pokemon por id
+
+//COMPLETA LA RUTA BY ID
+
 async function getPokemonById (req, res, next){
     const id = req.params.id
-    console.log(id)
+    if(isNaN(id)){
+        const callDb = await Pokemon.findOne({where: {id: id}})
+        if(callDb) return res.json(callDb)
+    }
+
     
     if(!isNaN(id)){
         try {
@@ -53,18 +93,22 @@ async function getPokemonById (req, res, next){
                  weight: callExtern.data.weight,
                  height: callExtern.data.height
             }
-            
             return res.json(pokemon)
         } catch (error) {
             next(error)
-            
         }
 
     }
 }
+    
+    
+
+           
+            
+// Agrega pokemones con la indo que trae body
+            
 
 
-// Agrega pokemones por body
 function addPokemon(req, res, next){
     const newId = uuidv4()
     const newPokemon = {...req.body, id: newId};

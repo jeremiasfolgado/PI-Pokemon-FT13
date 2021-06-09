@@ -21,7 +21,7 @@ const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
+conn.sync().then(() => {
   console.log("DB conectada y no es dragon ball jeremias BASTA")
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console

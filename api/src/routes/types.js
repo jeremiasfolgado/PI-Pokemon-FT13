@@ -1,8 +1,7 @@
 const {Router} = require('express');
 const router = Router();
+const {getAndCreateTypes} = require('../Controllers/types.js')
 
-router.get('/', (req, res)=> {
-    res.send('hola esta yendo todo mas o menos bien')
-})
+router.get('/', getAndCreateTypes)
 
 module.exports = router;
