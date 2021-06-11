@@ -21,10 +21,12 @@ const { Op } = require("sequelize");
 async function getAllPokemons (req, res, next){
     const result = [];
     const pokemonsDb = await Pokemon.findAll()
-    const name = req.query.name.toLowerCase()
+    
+    let name = req.query.name
     
     if(name){
         try {
+            name = name.toLowerCase()
             const callDb = await Pokemon.findOne({where: {name: {[Op.iLike]:name}}})
             if(callDb) return res.json(callDb)   
             const callQuery = await axios.get(`${BASE_URL}/${name}`)
@@ -111,7 +113,9 @@ async function getPokemonById (req, res, next){
 
 function addPokemon(req, res, next){
     const newId = uuidv4()
-    const newPokemon = {...req.body, id: newId};
+    
+    const newPokemon = {...req.body, id: newId, name: req.body.name.toLowerCase() };
+    console.log(newPokemon)
     if(!newPokemon){
         return res.send({
             error: 500,

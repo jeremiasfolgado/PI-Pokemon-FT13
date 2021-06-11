@@ -1,13 +1,14 @@
 import './App.css';
-import React , {useEffect, useState} from 'react';
-import axios from 'axios'
+import React  from 'react';
+import {Route} from 'react-router-dom'
+import Test from './components/prueba.js'
 
 function App() {
   
   return (
-    <div className="App">
-      {pokemonData}
-    </div>
+    <React.Fragment>
+      <Route component={Test}/>
+    </React.Fragment>
   );
 }
 
