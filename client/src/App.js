@@ -1,13 +1,15 @@
 import './App.css';
 import React  from 'react';
 import {Route} from 'react-router-dom'
-import Test from './components/prueba.js'
+import Home from './components/Home/Home.js'
+import PokemonDetail from './components/PokemonDetail/PokemonDetail.js';
 
 function App() {
   
   return (
     <React.Fragment>
-      <Route component={Test}/>
+      <Route exact path='/' component={Home}/>
+      <Route  path='/pokemon/:id' component={PokemonDetail}/>
     </React.Fragment>
   );
 }
