@@ -1,19 +1,11 @@
 
 const {Pokemon} = require('../db.js')
+
 const axios = require('axios')
 const {BASE_URL} = require('../../constants.js')
 const { v4: uuidv4 } = require('uuid');
 const { Op } = require("sequelize");
-//const { response } = require('express');
 
-
-//traer los primero doce pokemons
-
-
-
-
-
-//LISTO VIEJA EL GET POKEMON
 
 
 
@@ -38,7 +30,9 @@ async function getAllPokemons (req, res, next){
                  defense: callQuery.data.stats[2].base_stat,
                  speed: callQuery.data.stats[5].base_stat,
                  weight: callQuery.data.weight,
-                 height: callQuery.data.height
+                 height: callQuery.data.height,
+                 img: callQuery.data.sprites.other.dream_world.front_default,
+                 types: callQuery.data.types.map(type => type.type.name)
             }
             return res.json(pokemon)
         } catch (error) {
@@ -58,7 +52,9 @@ async function getAllPokemons (req, res, next){
                 defense: callTwo.data.stats[2].base_stat,
                 speed: callTwo.data.stats[5].base_stat,
                 weight: callTwo.data.weight,
-                height: callTwo.data.height
+                height: callTwo.data.height,
+                img: callTwo.data.sprites.other.dream_world.front_default,
+                types: callTwo.data.types.map(type => type.type.name)
                })
           }
       } 
@@ -94,7 +90,9 @@ async function getPokemonById (req, res, next){
                  defense: callExtern.data.stats[2].base_stat,
                  speed: callExtern.data.stats[5].base_stat,
                  weight: callExtern.data.weight,
-                 height: callExtern.data.height
+                 height: callExtern.data.height,
+                 img: callExtern.data.sprites.other.dream_world.front_default,
+                 types: callExtern.data.types.map(type => type.type.name)
             }
             return res.json(pokemon)
         } catch (error) {
@@ -102,8 +100,7 @@ async function getPokemonById (req, res, next){
                 return res.sendStatus(404)
             }
             res.status(500).json({error: 'Error grave'})
-            //console.log('estoy en el back',error)
-            //res.status(404).send('Sorry cant find that!');
+            
         }
     }
 }
@@ -121,9 +118,9 @@ async function getPokemonById (req, res, next){
 
 function addPokemon(req, res, next){
     const newId = uuidv4()
-    
     const newPokemon = {...req.body, id: newId, name: req.body.name.toLowerCase() };
-    console.log(newPokemon)
+    
+    console.log('este seria el que tendria que conectar',newPokemon)
     if(!newPokemon){
         return res.send({
             error: 500,
@@ -131,8 +128,17 @@ function addPokemon(req, res, next){
         })
     }
     Pokemon.create(newPokemon)
-        .then(pokemon => res.send(pokemon))
+        .then(async pokemon =>{ 
+            if(newPokemon.typeOne){
+                console.log("entre", newPokemon.typeOne)
+                
+                const setTypePokemon = await pokemon.setTypes(newPokemon.typeTwo ? [newPokemon.typeOne, newPokemon.typeTwo] : newPokemon.typeOne )
+                console.log("este es types", setTypePokemon[0])
+            } 
+            return res.send(pokemon)
+        })
         .catch(err => next(err))
+
 }
         
 module.exports = {

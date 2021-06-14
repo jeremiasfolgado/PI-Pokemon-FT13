@@ -14,7 +14,7 @@ export function Home (){
     const dispatch = useDispatch()
     useEffect(()=>{
         if(!statePokemons)dispatch(getPokemons())
-    },[dispatch])
+    },[dispatch, statePokemons])
 
 
     

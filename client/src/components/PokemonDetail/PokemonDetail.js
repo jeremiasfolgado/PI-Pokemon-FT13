@@ -35,19 +35,7 @@ function PokemonDetail(){
         )
     }
 
-    //console.log("Hola soy un detalle",pokemonDetail)
-    // return (
-    //     <div>
-    //         {pokemonDetail === null && <h1>pokemon no existe pero create el tuyo careta</h1>}
-    //         {pokemonDetail === undefined && <h1>Cargando...</h1>}
-    //         {typeof pokemonDetail === 'object' && (<div>
-    //             <span>Nombre </span>
-    //             <span>{pokemonDetail.name}</span>
-    //         </div>
-    //         )}
-    //         <Link to= '/'>Inicio </Link>
-    //     </div>
-    // )
+    
 }
 export default PokemonDetail
 

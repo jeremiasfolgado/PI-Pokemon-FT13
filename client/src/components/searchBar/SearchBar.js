@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {Link}from 'react-router-dom'
+
 import {getPokemonByName} from '../../actions/index.js'
 
 export function SearchBar (){
@@ -10,14 +10,13 @@ const pokemon = useSelector(state=> state.pokemonDetail)
 const dispatch = useDispatch()
 function handleSubmit(e){
     e.preventDefault();
-    console.log("se hizo el submit")
+    
     dispatch(getPokemonByName(pokeName))
     setPokeName('')
 
 }
 return (
-    // <Link to={`/pokemon/${pokeName}`}>
-    //     </Link>
+    
         <form onSubmit={e=>{
                 handleSubmit(e)
             }}>
