@@ -46,8 +46,8 @@ async function getAllPokemons (req, res, next){
         }
     }
     try {
-        const callOne = await axios.get(`${BASE_URL}`)
-        const listCallOne = callOne.data.results.slice(0,12)
+        const callOne = await axios.get(`${BASE_URL}?limit=40`)
+        const listCallOne = callOne.data.results
         for(let i = 0; i < listCallOne.length; i++){
             let callTwo = await axios.get(`${listCallOne[i].url}`)
             result.push({
@@ -63,7 +63,10 @@ async function getAllPokemons (req, res, next){
           }
       } 
       catch (error) {
-          next(error)
+        if(error.response?.status === 404){
+            return res.sendStatus(404)
+        }
+        res.status(500).json({error: 'Error grave'})
       }
       return res.json(result.concat(pokemonsDb))
 }
@@ -80,8 +83,6 @@ async function getPokemonById (req, res, next){
         const callDb = await Pokemon.findOne({where: {id: id}})
         if(callDb) return res.json(callDb)
     }
-
-    
     if(!isNaN(id)){
         try {
             const callExtern = await axios.get(`${BASE_URL}/${id}`)
@@ -97,11 +98,18 @@ async function getPokemonById (req, res, next){
             }
             return res.json(pokemon)
         } catch (error) {
-            next(error)
+            if(error.response?.status === 404){
+                return res.sendStatus(404)
+            }
+            res.status(500).json({error: 'Error grave'})
+            //console.log('estoy en el back',error)
+            //res.status(404).send('Sorry cant find that!');
         }
-
     }
 }
+
+    
+    
     
     
 
