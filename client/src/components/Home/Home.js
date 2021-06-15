@@ -4,16 +4,23 @@ import{Link}from 'react-router-dom'
 import {getPokemons} from '../../actions/index.js'
 import {PokemonCard} from '../PokemonCard/PokemonCard'
 import {Pagination} from '../Pagination/Pagination.js'
+import {OrderByName} from '../OrderByName/OrderByName.js'
+import {OrderByAttack} from '../OrderByAttack/OrderByAttack.js'
+import {OrderByLocation} from '../OrderByLocation/OrderByLocation.js'
+
 
 export function Home (){
     const statePokemons = useSelector(state => state.pokemons)
     const [currentPage, setCurrentPage] = useState(1)
     const [pokemonPerPage] = useState(12)
-    
-    
     const dispatch = useDispatch()
+    
+    
     useEffect(()=>{
-        if(!statePokemons)dispatch(getPokemons())
+        if(!statePokemons){
+            dispatch(getPokemons())
+        }
+        //statePokemons.sort((a,b)=> a.name - b.name)
     },[dispatch, statePokemons])
 
 
@@ -21,6 +28,8 @@ export function Home (){
     const indexOfLastPokemon = currentPage * pokemonPerPage;
     const indexOfFirstPokemon = indexOfLastPokemon - pokemonPerPage;
     const paginate = pageNumber => setCurrentPage(pageNumber);
+    //const orderByPokemonAttackAs = () =>statePokemons.sort((a,b)=> a.attack - b.attack) 
+    
     if(statePokemons){
         const currentPokemons = statePokemons.slice(indexOfFirstPokemon, indexOfLastPokemon)
         return (
@@ -34,6 +43,10 @@ export function Home (){
                 <Link to='/pokemon/input'>
                    <button>Agrega tu Pokemon</button>    
                 </Link>
+                <OrderByName></OrderByName> 
+                <OrderByAttack></OrderByAttack>
+                <OrderByLocation></OrderByLocation>
+
             </div>
             )
         }

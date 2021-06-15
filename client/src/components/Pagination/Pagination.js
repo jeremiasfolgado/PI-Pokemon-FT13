@@ -1,5 +1,5 @@
-import { number } from "prop-types";
 import React from "react";
+
 
 export function Pagination({pokemonPerPage, totalPokemons, paginate }){
     const pageNumbers = [];

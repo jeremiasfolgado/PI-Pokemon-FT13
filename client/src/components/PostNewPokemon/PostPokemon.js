@@ -83,7 +83,7 @@ export function PostPokemon(){
                 <button type='submit'>Agregar</button>
 
             </form>
-            <Link to= '/'>INICIO</Link>
+            <Link to= '/pokemon'>INICIO</Link>
 
         </div>
     )

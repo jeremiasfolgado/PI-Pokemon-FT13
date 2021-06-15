@@ -1,23 +1,45 @@
 
 const {Pokemon} = require('../db.js')
-
+const {Type} = require('../db.js')
+const {pokemon_type} = require('../db.js')
 const axios = require('axios')
 const {BASE_URL} = require('../../constants.js')
 const { v4: uuidv4 } = require('uuid');
 const { Op } = require("sequelize");
 
 
-
+//REVISAR FALTA TERMINAR DE TRAER LOS TIPOS DE LA BASE DE DATOS
 
 
 async function getAllPokemons (req, res, next){
     const result = [];
     const pokemonsDb = await Pokemon.findAll()
+    const typesDb = await pokemon_type.findAll()
     
-    let name = req.query.name
+    //console.log("aca",pokemonsDb)
+    console.log("aca", typesDb)
+    // for(let i = 0; i < pokemonsDb.length;i++){
+    //     const type = await pokemon_type.findAll({where: {pokemonId: (pokemonsDb[i].id).toString() }})
+    //     const prueba = type[0].dataValues.typeName
+    //     if(!pokemonsDb[i].dataValues.types) pokemonsDb[i].dataValues.types = [];
+    //     for(let j=0; j < typesDb.length; j++){
+    //          if(typesDb[j].dataValues.pokemonId === pokemonsDb[i].id.toString()) {
+    //             //console.log("hola entre", prueba) 
+    //             pokemonsDb[i].dataValues.types.push(prueba)
+    //             }
+    //     }
+          
+    //     //console.log("aca seria", pokemonsDb[i].dataValues.types, pokemonsDb[i].dataValues.name)
+        
+    // }
+
+    
+    let {name, from} = req.query
+   
     
     if(name){
         try {
+            
             name = name.toLowerCase()
             const callDb = await Pokemon.findOne({where: {name: {[Op.iLike]:name}}})
             if(callDb) return res.json(callDb)   
@@ -64,8 +86,16 @@ async function getAllPokemons (req, res, next){
         }
         res.status(500).json({error: 'Error grave'})
       }
+
+      if(from){
+          if(from === "api") return res.json(result);
+          return res.json(pokemonsDb)
+      }
+     
       return res.json(result.concat(pokemonsDb))
 }
+
+
             
       
 
@@ -133,7 +163,7 @@ function addPokemon(req, res, next){
                 console.log("entre", newPokemon.typeOne)
                 
                 const setTypePokemon = await pokemon.setTypes(newPokemon.typeTwo ? [newPokemon.typeOne, newPokemon.typeTwo] : newPokemon.typeOne )
-                console.log("este es types", setTypePokemon[0])
+                console.log("este es types", setTypePokemon[0][0])
             } 
             return res.send(pokemon)
         })
