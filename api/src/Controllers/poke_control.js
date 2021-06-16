@@ -8,33 +8,32 @@ const { v4: uuidv4 } = require('uuid');
 const { Op } = require("sequelize");
 
 
-//REVISAR FALTA TERMINAR DE TRAER LOS TIPOS DE LA BASE DE DATOS
+
 
 
 async function getAllPokemons (req, res, next){
     const result = [];
     const pokemonsDb = await Pokemon.findAll()
     const typesDb = await pokemon_type.findAll()
-    
-    //console.log("aca",pokemonsDb)
-    console.log("aca", typesDb)
-    // for(let i = 0; i < pokemonsDb.length;i++){
-    //     const type = await pokemon_type.findAll({where: {pokemonId: (pokemonsDb[i].id).toString() }})
-    //     const prueba = type[0].dataValues.typeName
-    //     if(!pokemonsDb[i].dataValues.types) pokemonsDb[i].dataValues.types = [];
-    //     for(let j=0; j < typesDb.length; j++){
-    //          if(typesDb[j].dataValues.pokemonId === pokemonsDb[i].id.toString()) {
-    //             //console.log("hola entre", prueba) 
-    //             pokemonsDb[i].dataValues.types.push(prueba)
-    //             }
-    //     }
-          
-    //     //console.log("aca seria", pokemonsDb[i].dataValues.types, pokemonsDb[i].dataValues.name)
-        
-    // }
+   
 
+
+    for(let i = 0; i < pokemonsDb.length;i++){
+       pokemonsDb[i].dataValues.types = []
+       typesDb.filter(pType =>  {
+           if(pType.dataValues.pokemonId === pokemonsDb[i].dataValues.id){ 
+                let type = pType.dataValues.typeName  
+                pokemonsDb[i].dataValues.types.push(type)
+            }
+        })
+    }
+                
+               
+       
     
     let {name, from} = req.query
+
+    
    
     
     if(name){
@@ -61,6 +60,10 @@ async function getAllPokemons (req, res, next){
             next(error)
         }
     }
+    
+    
+    
+    
     try {
         const callOne = await axios.get(`${BASE_URL}?limit=40`)
         const listCallOne = callOne.data.results

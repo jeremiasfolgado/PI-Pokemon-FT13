@@ -12,7 +12,7 @@ function App() {
   return (
     <React.Fragment>
       
-      <Route path='/pokemon'component={SearchBar}/>
+      {/* <Route path='/pokemon'component={SearchBar}/> */}
       <Route exact path='/'component={FirstPage}/>
       <Route exact path='/pokemon/input'component={PostPokemon}/>
       <Route exact path='/pokemon' component={Home}/>

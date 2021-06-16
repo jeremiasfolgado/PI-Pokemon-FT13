@@ -10,6 +10,7 @@ export const  ORDER_BY_NAME_ASC= 'ORDER_BY_NAME_ASC'
 export const  ORDER_BY_NAME_DESC= 'ORDER_BY_NAME_DESC'
 export const  ORDER_BY_ATTACK_ASC= 'ORDER_BY_ATTACK_ASC'
 export const  ORDER_BY_ATTACK_DESC= 'ORDER_BY_ATTACK_DESC'
+export const ORDER_BY_TYPE = 'ORDER_BY_TYPE'
 
 //
 
@@ -39,7 +40,12 @@ export function getPokemonDetail(id) {
         })
     };
 }
-          
+export function clearPokemonDetail() {
+  return {
+    type: CLEAR_POKEMON_DETAIL,
+    payload: undefined
+  };
+}          
           
 
 
@@ -55,63 +61,33 @@ export function getPokemonByName(name){
     } catch (error) {
       console.log(error)
     }
-    
-    
-    // .then(response => {
-    //     console.log("entre a response", response.data)
-        
-    //   })
-    //   .catch(error => {
-    //     if(error.response.status === 404) {
-    //       dispatch({type:SET_NULL_POKEMON_DETAIL, payload: null})
-    //     }else{
-    //       return alert("This Pokemon does not exist in our database")
-    //     }
-    //   })
-     }
   }
-// export function getPokemonByName(name){
-//   console.log("entre a la funcion")
-//   return function(dispatch){
-//     axios.get(`http://localhost:3001/pokemons?name=${name}`)
-//       .then(response => {
-//         console.log("entre a response", response.data)
-//         dispatch({type:GET_POKEMON_BY_NAME, payload: response.data})
-//       })
-//       .catch(error => {
-//         if(error.response.status === 404) {
-//           dispatch({type:SET_NULL_POKEMON_DETAIL, payload: null})
-//         }else{
-//           return alert("This Pokemon does not exist in our database")
-//         }
-//       })
-//     }
-//   }
+}
 
-  export function getPokemonInApiOrDb(boolean){
-    return function(dispatch){
-      axios.get(`http://localhost:3001/pokemons?from=${boolean}`)
-        .then(response => {
-          dispatch({type:GET_POKEMONS, payload: response.data})
-        })
-        .catch(error => {
-          if(error.response.status === 404) {
-            dispatch({type:SET_NULL_POKEMON_DETAIL, payload: null})
-          }else{
-            return alert("This Pokemon does not exist in our database")
-          }
-        })
-      }
-    }  
+
+  
+    
+   
+
+
+export function getPokemonInApiOrDb(boolean){
+  return function(dispatch){
+    axios.get(`http://localhost:3001/pokemons?from=${boolean}`)
+      .then(response => {
+        dispatch({type:GET_POKEMONS, payload: response.data})
+      })
+      .catch(error => {
+        if(error.response.status === 404) {
+          dispatch({type:SET_NULL_POKEMON_DETAIL, payload: null})
+        }else{
+          return alert("This Pokemon does not exist in our database")
+        }
+      })
+  }
+}  
         
           
     
-export function clearPokemonDetail() {
-    return {
-      type: CLEAR_POKEMON_DETAIL,
-      payload: undefined
-    };
-}
 
 export function orderPokemonsByNameAsc(dispatch){
     dispatch({type: ORDER_BY_NAME_ASC})
@@ -133,4 +109,3 @@ export function orderPokemonsByAttackDesc(dispatch){
       
       
 
-//  

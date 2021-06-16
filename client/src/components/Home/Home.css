@@ -1,0 +1,17 @@
+.home-container{
+    width: 80%;
+    height: 430px;
+    display: flex;
+    background-color:rgba(96, 96, 96, 0.7);
+    margin: auto;
+
+}
+.cards-container{
+    width: 870px;
+    height: 400px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: rosybrown;
+
+}

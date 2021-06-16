@@ -30,6 +30,10 @@ function PokemonDetail(){
             <div>
                 <span>Nombre </span>
                 <span>{pokemonDetail.name}</span>
+                <br/>
+                <span>{pokemonDetail.speed}</span>
+                <br/>
+
                 <Link to='/pokemon'>inicio </Link>
             </div>
         )
