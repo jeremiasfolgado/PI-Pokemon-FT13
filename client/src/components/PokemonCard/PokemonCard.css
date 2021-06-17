@@ -1,41 +1,92 @@
-.card-container{
-    width: 126px;
-    height: 181px;
-    z-index: 30;
+*{
+    box-sizing: border-box;
 }
 
-.id-picture-container{
-    width: 119px;
-    height: 107px;
+
+
+
+.link{
+    text-decoration: none;
+
+}
+.pokemons-cards-cotainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: row wrap;
+	justify-content: center;
+    align-items: center;
+	
+}
+.card-container{
+    width: 9rem;
+    height: 13rem;
+    margin: 0.5rem;
+    background-color:#606060;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.8rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    background: radial-gradient( #f9be00, #fff697);
-    position: relative;
-    z-index: 50;
+    justify-content: center;
+}
+
+.picture-container{
+    width: 8rem;
+    height: 7rem;
+    background: radial-gradient( #f9be00, #f9de58);
     border-radius: 10%;
-
-}
-.shadow{
-    width: 89px;
-    height: 25px;
-    background-color:rgba(96, 96, 96, 0.5);
-    border-radius: 100%;
-    position:absolute;
-    bottom: 15%;
-    z-index: 70;
+    display:flex;
+    justify-content: center;
+        
 }
 
-.profile-image{
-    width: 70px;
-    position: absolute;
-    top: 15%;
-    right: 15%;
-    z-index: 100;
+   
+.profile-image {
+    width: 100%;
+    margin: 0.8rem;
+    
+}
+    
+.description-container{
+    width: 8rem;
+    height: 5rem ;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #cccccc;
+    margin: 0.2rem;
+    border-radius: 10%;
+}
+    
+    
+    
+    
+
+    
+    
+   
+.card-title{
+    
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    color: #606060;
 }
 
-ul{
-    text-decoration: none;
-    list-style: none;
+
+.types{
+    
+    font-weight: 100;
+    font-style: italic;
+    font-size: 0.8rem;
+    color: #606060;
 }
+
+.pokemon-types{
+    
+    font-weight:500;
+    font-size: 1rem;
+    color: #606060;
+} 
+

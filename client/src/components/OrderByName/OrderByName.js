@@ -9,12 +9,12 @@ export function OrderByName(){
     
 
     return (
-        <nav>
-            <button onClick={()=> dispatch(orderPokemonsByNameAsc)} >Order by Name</button>
-            <button onClick={()=> dispatch(orderPokemonsByNameDesc)} >Desc</button>
-            <button onClick={()=> dispatch(orderPokemonsByNameAsc)} >Asc</button>
-            
-        </nav>
+        <div className="btn-container">
+           <a href="#" className="btn" onClick={()=> dispatch(orderPokemonsByNameAsc)}>Order by Name</a>
+           <a href="#" className="btn-sec" onClick={()=> dispatch(orderPokemonsByNameDesc)}>Desc</a>
+           <a href="#" className="btn-sec" onClick={()=> dispatch(orderPokemonsByNameAsc)}>Asc</a>
+        </div>
+       
     )
 }
 

@@ -6,23 +6,27 @@ export function  PokemonCard({actualList}){
     
     
     return (
-       <div>
+       <div className="pokemons-cards-cotainer">
            {
               actualList && actualList.map(pokemon => (
-                       <div className="card-container">
-                           <div className="id-picture-container">
-                               <div className="img-container">
-                                    <img src={pokemon.img} className="profile-image"></img>   
-                               </div>
+                  
+                  <Link to={`/pokemon/${pokemon.id}`} className="link card-container">
+                           <div className="picture-container">
+                               <img src={pokemon.img} className="profile-image"></img>   
                                <div className="shadow"></div>
                            </div>
-                            <ul>
-                                <li key= {pokemon.id}>
-                                    <Link to={`/pokemon/${pokemon.id}`}>{pokemon.name}</Link>
-                                </li>
-                                <li>{pokemon.types.join(" ")}</li>
-                            </ul>
-                       </div>
+                              
+                           <div className="description-container">
+                                <span class="card-title">{pokemon.name}</span>
+                                <span className="types">Types</span>
+                                <span className="pokemon-types">{pokemon.types.join(" ")}</span>
+                           </div>
+                  </Link>
+
+                                
+                               
+                      
+                  
 
                    ))
                 }
@@ -35,3 +39,26 @@ export function  PokemonCard({actualList}){
 }
 
 export default PokemonCard;
+
+
+
+
+/*
+ <div className="card-container" >
+                           <div className="id-picture-container">
+                               <div className="img-container">
+                                    <img src={pokemon.img} className="profile-image"></img>   
+                               </div>
+                               <div className="shadow"></div>
+                           </div>
+                           <div className="description-container">
+                                <ul>
+                                    <li key= {pokemon.id}>
+                                        <Link to={`/pokemon/${pokemon.id}`}>{pokemon.name}</Link>
+                                    </li>
+                                    <li>{pokemon.types.join(" ")}</li>
+                                </ul>
+                           </div>
+                               
+                       </div>
+*/

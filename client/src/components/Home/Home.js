@@ -24,7 +24,7 @@ export function Home (){
         if(!statePokemons){
             dispatch(getPokemons())
         }
-        //statePokemons.sort((a,b)=> a.name - b.name)
+        
     },[dispatch, statePokemons])
 
 
@@ -47,15 +47,7 @@ export function Home (){
         console.log("el result",result)
         
     }
-    /*
-    a={
-        value: x,
-        next: {
-            value:
-        }
-    }
     
-    */
     
     if(statePokemons){
         
@@ -72,30 +64,33 @@ export function Home (){
         const currentPokemons = statePokemons.slice(indexOfFirstPokemon, indexOfLastPokemon)
         //console.log("sin filttro",orderType)
         return (
-            <div className="home-container">
-                <div className="cards-container">
-                    <PokemonCard  actualList={currentPokemons}/>
+            <div className="flex-container">
+                <div className="home-container">
+                    <div className="left-options-container">
+                        <OrderByAttack></OrderByAttack>
+                        <OrderByName></OrderByName> 
+                        <OrderByLocation></OrderByLocation>
+                        <OrderByType getTypeToOrder={getTypeToOrder}></OrderByType>
+                    </div>
+                    <div className="cards-container">
+                        <PokemonCard  actualList={currentPokemons}/>
+                    </div>
+                    <div className="rigth-options-container">
+                        <SearchBar/>
+                        <Link to='/pokemon/input'>
+                            <button>Agrega tu Pokemon</button>    
+                        </Link>
+                        <Pagination 
+                            pokemonPerPage={pokemonPerPage}
+                            totalPokemons ={statePokemons.length}
+                            paginate={paginate}
+                        />
+                    </div>
                 </div>
-                <div className="left-options-container">
-                    <OrderByAttack></OrderByAttack>
-                    <OrderByName></OrderByName> 
-                    <OrderByLocation></OrderByLocation>
-                    <OrderByType getTypeToOrder={getTypeToOrder}></OrderByType>
-                </div>
-                <div className="rigth-options-container">
-                    <SearchBar/>
-                    <Link to='/pokemon/input'>
-                        <button>Agrega tu Pokemon</button>    
-                    </Link>
-                    <Pagination 
-                        pokemonPerPage={pokemonPerPage}
-                        totalPokemons ={statePokemons.length}
-                        paginate={paginate}
-                    />
-                </div>
-
 
             </div>
+
+
             )
         }
         return (

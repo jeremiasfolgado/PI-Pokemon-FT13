@@ -7,13 +7,12 @@ export function OrderByLocation(){
     
  
     return (
-        <nav>
-            <button onClick={()=> dispatch(getPokemonInApiOrDb("api"))} >From Api</button>
-            <button onClick={()=> dispatch(getPokemonInApiOrDb("database"))}>From Database</button>
-            <button onClick={()=> dispatch(getPokemons())}>Get All</button>
-
-        </nav>
-
+        <div className="btn-container">
+            <a href="#" className="btn" onClick={()=> dispatch(getPokemonInApiOrDb("api"))}>From Api</a>
+            <a href="#" className="btn" onClick={()=> dispatch(getPokemonInApiOrDb("database"))}>From Database</a>
+            <a href="#" className="btn" onClick={()=> dispatch(getPokemons())}>Get All</a>
+        </div>
+       
  )
 }
 
