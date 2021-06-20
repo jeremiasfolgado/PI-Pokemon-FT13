@@ -1,16 +1,17 @@
 body {
-    
+   
     font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
     display: flex;
-    background-image: url("./resources/background_image.jpg");
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
+    /* background-image: url("./resources/background_image.jpg"); */
+    background-color: #cccccc;
     background-size: cover;
+    width: 100%;
+    height: 100%;
     
 }
-html, body{
+html, body #root{
     height: 100%;
     width: 100%;
 }
+

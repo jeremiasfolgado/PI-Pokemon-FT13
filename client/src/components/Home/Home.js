@@ -8,15 +8,16 @@ import {OrderByName} from '../OrderByName/OrderByName.js'
 import {OrderByAttack} from '../OrderByAttack/OrderByAttack.js'
 import {OrderByLocation} from '../OrderByLocation/OrderByLocation.js'
 import{OrderByType}from '../OrderByType/OrderByType.js'
-import{SearchBar} from '../searchBar/SearchBar.js'
+import{SearchBar} from '../SearchBar/SearchBar.js'
 import './Home.css'
 
 
 export function Home (){
     const statePokemons = useSelector(state => state.pokemons)
+    const filterTypePokemon =useSelector(state => state.pokemonsFiltered)
     const [currentPage, setCurrentPage] = useState(1)
     const [pokemonPerPage] = useState(12)
-    const [typeToOrder, setTypeToOrder]= useState("")
+   
     const dispatch = useDispatch()
     
     
@@ -32,58 +33,47 @@ export function Home (){
     const indexOfLastPokemon = currentPage * pokemonPerPage;
     const indexOfFirstPokemon = indexOfLastPokemon - pokemonPerPage;
     const paginate = pageNumber => setCurrentPage(pageNumber);
-    const getTypeToOrder = type => setTypeToOrder(type);
     
-    //FILTRO POR TIPO PEDIR AYUDA
+    
 
-    if(typeToOrder){
-        const orderType= []
-        for(let i=0; i < statePokemons.length;i++){
-            if(statePokemons[i].types.includes(typeToOrder)) orderType.push(statePokemons[i])
-        }
-        const result = orderType.slice(indexOfFirstPokemon, indexOfLastPokemon)  
-        setTypeToOrder("")
-        
-        console.log("el result",result)
-        
-    }
+    
     
     
     if(statePokemons){
         
-        // if(typeToOrder){
-        //     for(let i=0; i < statePokemons.length;i++){
-        //         if(statePokemons[i].types.includes(typeToOrder)) orderType.push(statePokemons[i])
-        //     }
-        //     const result = orderType.slice(indexOfFirstPokemon, indexOfLastPokemon)  
-        //     setTypeToOrder("")
-        //     //console.log("el result",result)
-            
-        // }
-
-        const currentPokemons = statePokemons.slice(indexOfFirstPokemon, indexOfLastPokemon)
-        //console.log("sin filttro",orderType)
+        
+        //const currentPokemons = filterTypePokemon.length > 0 ? filterTypePokemon.slice(indexOfFirstPokemon, indexOfLastPokemon) : statePokemons.slice(indexOfFirstPokemon, indexOfLastPokemon)
+        const currentPokemons = !!filterTypePokemon ? filterTypePokemon.slice(indexOfFirstPokemon, indexOfLastPokemon) : statePokemons.slice(indexOfFirstPokemon, indexOfLastPokemon)
+        
         return (
             <div className="flex-container">
-                <div className="home-container">
+                <div className="render-container">
                     <div className="left-options-container">
                         <OrderByAttack></OrderByAttack>
                         <OrderByName></OrderByName> 
                         <OrderByLocation></OrderByLocation>
-                        <OrderByType getTypeToOrder={getTypeToOrder}></OrderByType>
+                        <OrderByType ></OrderByType>
                     </div>
                     <div className="cards-container">
-                        <PokemonCard  actualList={currentPokemons}/>
+                        <PokemonCard  actualList={currentPokemons.length !== 0 ? currentPokemons : alert("No pokemons of that type were found")}/>
                     </div>
                     <div className="rigth-options-container">
                         <SearchBar/>
-                        <Link to='/pokemon/input'>
-                            <button>Agrega tu Pokemon</button>    
-                        </Link>
+                        
+                        <div className="btn-container">
+                            <Link to='/pokemon/input' >
+                            <button className="btn">
+                                Add Pokemon   
+                            </button>
+
+                            </Link>
+                        </div>
+
                         <Pagination 
                             pokemonPerPage={pokemonPerPage}
-                            totalPokemons ={statePokemons.length}
+                            totalPokemons ={ !!filterTypePokemon ? filterTypePokemon.length : statePokemons.length}
                             paginate={paginate}
+                            currentPage={currentPage}
                         />
                     </div>
                 </div>
@@ -92,12 +82,12 @@ export function Home (){
 
 
             )
-        }
-        return (
-            <div>
-                <h1>Cargando ...</h1>
+    }
+    return (
+            <div className="loading-msg">
+                <h1>Loading ...</h1>
             </div>
-        )
+    )
 }
             
 export default Home;

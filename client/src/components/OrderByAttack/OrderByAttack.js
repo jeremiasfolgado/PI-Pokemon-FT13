@@ -6,9 +6,9 @@ export function OrderByAttack (){
     const dispatch = useDispatch();
     return (
         <div className="btn-container">
-           <a href="#" className="btn" onClick={()=>dispatch(orderPokemonsByAttackAsc)}>Order by Attack</a>
-           <a href="#" className="btn-sec" onClick={()=> dispatch(orderPokemonsByAttackDesc)}>Desc</a>
-           <a href="#" className="btn-sec" onClick={()=> dispatch(orderPokemonsByAttackAsc)}>Asc</a>
+           <button className="btn" onClick={()=>dispatch(orderPokemonsByAttackAsc)}>Order by Attack</button>
+           <button className="btn-sec" onClick={()=> dispatch(orderPokemonsByAttackDesc)}>Desc</button>
+           <button className="btn-sec" onClick={()=> dispatch(orderPokemonsByAttackAsc)}>Asc</button>
         </div>
 
     )

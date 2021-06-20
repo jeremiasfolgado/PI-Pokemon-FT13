@@ -46,14 +46,9 @@ async function getAllPokemons (req, res, next){
             const pokemon = {
                 name: callQuery.data.name,
                  id: callQuery.data.id, 
-                 hp: callQuery.data.stats[0].base_stat,
-                 attack: callQuery.data.stats[1].base_stat,
-                 defense: callQuery.data.stats[2].base_stat,
-                 speed: callQuery.data.stats[5].base_stat,
-                 weight: callQuery.data.weight,
-                 height: callQuery.data.height,
                  img: callQuery.data.sprites.other.dream_world.front_default,
                  types: callQuery.data.types.map(type => type.type.name)
+                 
             }
             return res.json(pokemon)
         } catch (error) {
@@ -72,12 +67,7 @@ async function getAllPokemons (req, res, next){
             result.push({
                 name: callTwo.data.name,
                 id: callTwo.data.id, 
-                hp: callTwo.data.stats[0].base_stat,
-                attack: callTwo.data.stats[1].base_stat,
-                defense: callTwo.data.stats[2].base_stat,
-                speed: callTwo.data.stats[5].base_stat,
-                weight: callTwo.data.weight,
-                height: callTwo.data.height,
+                
                 img: callTwo.data.sprites.other.dream_world.front_default,
                 types: callTwo.data.types.map(type => type.type.name)
                })
@@ -115,6 +105,7 @@ async function getPokemonById (req, res, next){
     if(!isNaN(id)){
         try {
             const callExtern = await axios.get(`${BASE_URL}/${id}`)
+            console.log("hola estoy en la llamada", )
             const pokemon = {
                 name: callExtern.data.name,
                  id: callExtern.data.id, 
@@ -125,6 +116,7 @@ async function getPokemonById (req, res, next){
                  weight: callExtern.data.weight,
                  height: callExtern.data.height,
                  img: callExtern.data.sprites.other.dream_world.front_default,
+                 imgProfile: callExtern.data.sprites.other["official-artwork"].front_default,
                  types: callExtern.data.types.map(type => type.type.name)
             }
             return res.json(pokemon)

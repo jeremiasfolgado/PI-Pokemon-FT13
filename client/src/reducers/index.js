@@ -1,4 +1,5 @@
-import {
+import 
+{
     GET_POKEMONS,GET_POKEMON_DETAIL, 
     CLEAR_POKEMON_DETAIL, 
     SET_NULL_POKEMON_DETAIL, 
@@ -6,11 +7,17 @@ import {
     ORDER_BY_NAME_ASC, 
     ORDER_BY_NAME_DESC,
     ORDER_BY_ATTACK_ASC,
-    ORDER_BY_ATTACK_DESC
-} from '../actions/index.js'
+    ORDER_BY_ATTACK_DESC,
+    ORDER_BY_TYPE, 
+    GET_BY_LOCATION,
+    GET_TYPES
+} 
+from '../actions/index.js'
 const initialState = {
     pokemons: undefined,
     pokemonDetail: undefined,
+    pokemonsFiltered: undefined,
+    types: []
 }
 
 
@@ -49,27 +56,78 @@ function rootReducer(state = initialState, action) {
         case ORDER_BY_NAME_ASC:{
             return {
                 ...state,
-                pokemons: [...state.pokemons.sort((a,b) => a.name.localeCompare(b.name))] 
+                pokemons: [...state.pokemons.sort((a,b) => a.name.localeCompare(b.name))],
+                pokemonsFiltered: !!state.pokemonsFiltered && [...state.pokemonsFiltered.sort((a,b) => a.name.localeCompare(b.name))] 
             }
         }
         case ORDER_BY_NAME_DESC:{
             return {
                 ...state,
-                pokemons: [...state.pokemons.sort((a,b) => b.name.localeCompare(a.name))] 
+                pokemons: [...state.pokemons.sort((a,b) => b.name.localeCompare(a.name))], 
+                pokemonsFiltered: !!state.pokemonsFiltered && [...state.pokemonsFiltered.sort((a,b) => b.name.localeCompare(a.name))]
             }
         }
         case ORDER_BY_ATTACK_ASC:{
+            
             return {
                 ...state,
-                pokemons: [...state.pokemons.sort((a,b) => a.attack - b.attack)] 
+                pokemons: [...state.pokemons.sort((a,b) => a.attack - b.attack)], 
+                pokemonsFiltered: !!state.pokemonsFiltered && [...state.pokemonsFiltered.sort((a,b) => a.attack - b.attack)]
             }
         }
         case ORDER_BY_ATTACK_DESC:{
             return {
                 ...state,
-                pokemons: [...state.pokemons.sort((a,b) => b.attack - a.attack)] 
+                pokemons: [...state.pokemons.sort((a,b) => b.attack - a.attack)],
+                pokemonsFiltered: !!state.pokemonsFiltered  && [...state.pokemonsFiltered.sort((a,b) => b.attack - a.attack)] 
             }
         }
+        case ORDER_BY_TYPE:{
+            return {
+                ...state,
+                pokemonsFiltered: [...state.pokemons.filter( pokemon => pokemon.types.includes(action.payload))] 
+            }
+        }
+        case GET_BY_LOCATION:{
+            switch (action.payload) {
+                case "api": {
+                    return {
+                        ...state,
+                        pokemonsFiltered: [...state.pokemons.filter( pokemon => typeof pokemon.id === 'number')] 
+                    }
+                    
+                }
+                case "database": {
+                    return {
+                        ...state,
+                        pokemonsFiltered: [...state.pokemons.filter( pokemon =>  pokemon.id.length)] 
+                    }
+                    
+                }
+                case "": {
+                    return {
+                        ...state,
+                        pokemonsFiltered: undefined 
+                    }
+                    
+                }
+                
+                
+                default:
+                    
+                    break;
+            }
+            
+            
+        }
+        case GET_TYPES:{
+            return {
+                ...state,
+                types: [...action.payload.map(type => type.name)] 
+            }
+        }
+        
+
             
             
         default:

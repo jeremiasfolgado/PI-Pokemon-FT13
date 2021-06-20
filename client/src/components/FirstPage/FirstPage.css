@@ -1,0 +1,22 @@
+.btn-main{
+    width: 30%;
+    height: 3rem;
+    text-decoration: none;
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    padding:0.8rem 0.2rem;
+    margin:0 0.3rem 0.3rem 0;
+    font-family: 'Montserrat', sans-serif;
+    text-transform:uppercase;
+    font-weight: 700;
+    border:0.2rem solid #606060;
+    color: #606060;
+    background-color: #cccccc;
+    transition: all 1s;
+    text-align: center;
+}
+.btn-main:hover{
+    color:#cccccc;
+    background: #606060;
+}

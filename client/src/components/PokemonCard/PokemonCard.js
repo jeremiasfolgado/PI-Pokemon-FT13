@@ -10,16 +10,16 @@ export function  PokemonCard({actualList}){
            {
               actualList && actualList.map(pokemon => (
                   
-                  <Link to={`/pokemon/${pokemon.id}`} className="link card-container">
-                           <div className="picture-container">
+                  <Link to={`/pokemon/${pokemon.id}`} key={pokemon.id} className="link card-container">
+                           <div  className="picture-container">
                                <img src={pokemon.img} className="profile-image"></img>   
-                               <div className="shadow"></div>
+                               
                            </div>
                               
                            <div className="description-container">
-                                <span class="card-title">{pokemon.name}</span>
+                                <span className="card-title">{pokemon.name}</span>
                                 <span className="types">Types</span>
-                                <span className="pokemon-types">{pokemon.types.join(" ")}</span>
+                                <span className="pokemon-types">{pokemon.types.join(" - ")}</span>
                            </div>
                   </Link>
 

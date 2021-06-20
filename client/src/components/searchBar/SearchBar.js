@@ -1,11 +1,13 @@
 import React, {useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-
+import {useDispatch} from 'react-redux'
 import {getPokemonByName} from '../../actions/index.js'
+import '../OrderByType/OrderByType.css'
+
+
 
 export function SearchBar (){
 const [pokeName, setPokeName] = useState('')
-const pokemon = useSelector(state=> state.pokemonDetail)
+
 //console.log(pokeName)
 const dispatch = useDispatch()
 function handleSubmit(e){
@@ -16,13 +18,16 @@ function handleSubmit(e){
 
 }
 return (
-    
+    <div className="btn-container">
         <form onSubmit={e=>{
                 handleSubmit(e)
             }}>
-            <input type='text' autoComplete='off' value={pokeName} onChange={e=>setPokeName(e.target.value)} ></input>
-            <input type='submit' value='buscar'></input>
+            <input className="input-search" type='text' autoComplete='off' value={pokeName} onChange={e=>setPokeName(e.target.value)} ></input>
+            <input type='submit' value='search' className="btn"></input>
         </form>
+    </div>
+
+    
     
 )
 }

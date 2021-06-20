@@ -11,6 +11,8 @@ export const  ORDER_BY_NAME_DESC= 'ORDER_BY_NAME_DESC'
 export const  ORDER_BY_ATTACK_ASC= 'ORDER_BY_ATTACK_ASC'
 export const  ORDER_BY_ATTACK_DESC= 'ORDER_BY_ATTACK_DESC'
 export const ORDER_BY_TYPE = 'ORDER_BY_TYPE'
+export const GET_BY_LOCATION = 'GET_BY_LOCATION'
+export const GET_TYPES= 'GET_TYPES'
 
 //
 
@@ -23,6 +25,12 @@ export function getPokemons() {
     };
 }
 
+export function getTypes(){
+  return async (dispatch)=> {
+      const call = await axios.get('http://localhost:3001/types/');
+      dispatch({type:GET_TYPES, payload: call.data})
+  }
+}
 
 
 export function getPokemonDetail(id) {
@@ -50,7 +58,7 @@ export function clearPokemonDetail() {
 
 
 export function getPokemonByName(name){
-  console.log("entre a la funcion", name)
+  // console.log("entre a la funcion", name)
   return async function(dispatch){
     try {
       const call = await axios.get(`http://localhost:3001/pokemons?name=${name}`)
@@ -59,7 +67,7 @@ export function getPokemonByName(name){
       dispatch({type:GET_POKEMON_BY_NAME, payload: call.data})
     }  
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 }
@@ -68,23 +76,32 @@ export function getPokemonByName(name){
   
     
    
+//FILTRO POR API/DATABASE
 
+// export function getPokemonInApiOrDb(boolean){
+//   return function(dispatch){
+//     axios.get(`http://localhost:3001/pokemons?from=${boolean}`)
+//       .then(response => {
+//         dispatch({type:GET_POKEMONS, payload: response.data})
+//       })
+//       .catch(error => {
+//         if(error.response.status === 404) {
+//           dispatch({type:SET_NULL_POKEMON_DETAIL, payload: null})
+//         }else{
+//           return alert("This Pokemon does not exist in our database")
+//         }
+//       })
+//   }
+// }  
 
-export function getPokemonInApiOrDb(boolean){
+export function getPokemonByLocation(from){
+ 
   return function(dispatch){
-    axios.get(`http://localhost:3001/pokemons?from=${boolean}`)
-      .then(response => {
-        dispatch({type:GET_POKEMONS, payload: response.data})
-      })
-      .catch(error => {
-        if(error.response.status === 404) {
-          dispatch({type:SET_NULL_POKEMON_DETAIL, payload: null})
-        }else{
-          return alert("This Pokemon does not exist in our database")
-        }
-      })
+    dispatch({type: GET_BY_LOCATION, payload: from})
+
   }
-}  
+
+}
         
           
     
@@ -102,10 +119,16 @@ export function orderPokemonsByAttackAsc(dispatch){
 export function orderPokemonsByAttackDesc(dispatch){
     dispatch({type: ORDER_BY_ATTACK_DESC})
 }
- 
+
+export function orderPokemonsByType(type){
+  return function(dispatch){
+    dispatch({type: ORDER_BY_TYPE, payload: type})
+
+  }
+}
       
       
-      
+     
       
       
 

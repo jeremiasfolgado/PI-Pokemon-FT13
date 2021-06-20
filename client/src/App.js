@@ -3,7 +3,7 @@ import React  from 'react';
 import {Route} from 'react-router-dom'
 import Home from './components/Home/Home.js'
 import PokemonDetail from './components/PokemonDetail/PokemonDetail.js';
-import SearchBar from './components/searchBar/SearchBar.js';
+// import SearchBar from './components/SearchBar/SearchBar.js';
 import PostPokemon from './components/PostNewPokemon/PostPokemon';
 import FirstPage from './components/FirstPage/FirstPage';
 
