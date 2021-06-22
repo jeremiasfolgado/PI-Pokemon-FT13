@@ -23,7 +23,11 @@ export function PostPokemon(){
     })
     const dispatch = useDispatch()
     useEffect(()=>{
-        return ()=> dispatch(getPokemons())
+        return ()=> {
+            dispatch(getPokemons())
+            
+        }
+
     })
 
     const handleChange = e =>{
@@ -38,8 +42,8 @@ export function PostPokemon(){
        
         async function callPost(){
             if(pokemonState.name === '' || pokemonState.typeOne === '') return alert("This value is required")
-
             const call = await axios.post('http://localhost:3001/pokemons', pokemonState)
+
         }callPost()
        
         setPokemonState({

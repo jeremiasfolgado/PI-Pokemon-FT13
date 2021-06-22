@@ -19,7 +19,7 @@ function PokemonDetail(){
     if(pokemonDetail === null){
         return (
             <Link to='/'>
-                <h1>pokemon no existe pero create el tuyo careta</h1>
+                <h1>The pokemon does not exist</h1>
             </Link>
 
         )

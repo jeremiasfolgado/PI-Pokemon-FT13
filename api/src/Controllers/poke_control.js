@@ -40,6 +40,7 @@ async function getAllPokemons (req, res, next){
         try {
             
             name = name.toLowerCase()
+           
             const callDb = await Pokemon.findOne({where: {name: {[Op.iLike]:name}}})
            
             if(callDb) return res.json(callDb)   
@@ -48,7 +49,7 @@ async function getAllPokemons (req, res, next){
             const pokemon = {
                 name: callQuery.data.name,
                 id: callQuery.data.id, 
-                attack: callQuery.data.data.stats[1].base_stat,
+                attack: callQuery.data.stats[1].base_stat,
                 img: callQuery.data.sprites.other.dream_world.front_default,
                 types: callQuery.data.types.map(type => type.type.name)
                  
@@ -119,7 +120,7 @@ async function getPokemonById (req, res, next){
     if(!isNaN(id)){
         try {
             const callExtern = await axios.get(`${BASE_URL}/${id}`)
-            console.log("hola estoy en la llamada", )
+            
             const pokemon = {
                 name: callExtern.data.name,
                  id: callExtern.data.id, 
@@ -159,7 +160,7 @@ function addPokemon(req, res, next){
     const newId = uuidv4()
     const newPokemon = {...req.body, id: newId, name: req.body.name.toLowerCase() };
     
-    console.log('este seria el que tendria que conectar',newPokemon)
+    
     if(!newPokemon){
         return res.send({
             error: 500,
@@ -169,10 +170,10 @@ function addPokemon(req, res, next){
     Pokemon.create(newPokemon)
         .then(async pokemon =>{ 
             if(newPokemon.typeOne){
-                console.log("entre", newPokemon.typeOne, newPokemon.typeTwo)
+               
                 
                 const setTypePokemon = await pokemon.setTypes(newPokemon.typeTwo ? [newPokemon.typeOne, newPokemon.typeTwo] : newPokemon.typeOne )
-                console.log("este es types", setTypePokemon[0][0])
+               
             } 
             return res.send(pokemon)
         })
