@@ -41,13 +41,16 @@ async function getAllPokemons (req, res, next){
             
             name = name.toLowerCase()
             const callDb = await Pokemon.findOne({where: {name: {[Op.iLike]:name}}})
+           
             if(callDb) return res.json(callDb)   
             const callQuery = await axios.get(`${BASE_URL}/${name}`)
+           
             const pokemon = {
                 name: callQuery.data.name,
-                 id: callQuery.data.id, 
-                 img: callQuery.data.sprites.other.dream_world.front_default,
-                 types: callQuery.data.types.map(type => type.type.name)
+                id: callQuery.data.id, 
+                attack: callQuery.data.data.stats[1].base_stat,
+                img: callQuery.data.sprites.other.dream_world.front_default,
+                types: callQuery.data.types.map(type => type.type.name)
                  
             }
             return res.json(pokemon)
@@ -64,10 +67,11 @@ async function getAllPokemons (req, res, next){
         const listCallOne = callOne.data.results
         for(let i = 0; i < listCallOne.length; i++){
             let callTwo = await axios.get(`${listCallOne[i].url}`)
+            
             result.push({
                 name: callTwo.data.name,
                 id: callTwo.data.id, 
-                
+                attack: callTwo.data.stats[1].base_stat,
                 img: callTwo.data.sprites.other.dream_world.front_default,
                 types: callTwo.data.types.map(type => type.type.name)
                })
@@ -100,7 +104,17 @@ async function getPokemonById (req, res, next){
     const id = req.params.id
     if(isNaN(id)){
         const callDb = await Pokemon.findOne({where: {id: id}})
-        if(callDb) return res.json(callDb)
+        const typesDb = await pokemon_type.findAll()
+        const pokemon = {...callDb.dataValues, types : []}
+        
+        for(let i = 0; i < typesDb.length; i++){
+            if(typesDb[i].dataValues.pokemonId === callDb.dataValues.id){ 
+                pokemon.types.push( typesDb[i].dataValues.typeName)
+            }
+        }
+        
+        
+        if(callDb) return res.json(pokemon)
     }
     if(!isNaN(id)){
         try {
@@ -155,7 +169,7 @@ function addPokemon(req, res, next){
     Pokemon.create(newPokemon)
         .then(async pokemon =>{ 
             if(newPokemon.typeOne){
-                console.log("entre", newPokemon.typeOne)
+                console.log("entre", newPokemon.typeOne, newPokemon.typeTwo)
                 
                 const setTypePokemon = await pokemon.setTypes(newPokemon.typeTwo ? [newPokemon.typeOne, newPokemon.typeTwo] : newPokemon.typeOne )
                 console.log("este es types", setTypePokemon[0][0])

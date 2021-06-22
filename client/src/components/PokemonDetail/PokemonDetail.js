@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
 import{useParams} from 'react-router-dom'
 import { clearPokemonDetail, getPokemonDetail } from '../../actions/index.js';
+import profileDefault from '../../resources/profile-default.png'
 import './PokemonDetail.css'
 
 
@@ -22,9 +23,10 @@ function PokemonDetail(){
             </Link>
 
         )
-    }else if(pokemonDetail === undefined){
+    }
+    else if(pokemonDetail === undefined){
         return (
-            <h1>Cargando...</h1>
+            <h1>Loading...</h1>
         )
     }
     else{
@@ -59,7 +61,7 @@ function PokemonDetail(){
                             <div className="group-detail-container">
                                 <div className="stats">
                                     <span className="title">ID</span>
-                                    <span className="pokemon-name">{pokemonDetail.id}</span>
+                                    <span className="pokemon-name">{typeof pokemonDetail.id === 'string' ? pokemonDetail.id.slice(0,4) : pokemonDetail.id}</span>
                                 </div>
                                 <div className="stats">
                                     <span className="title">Height</span>
@@ -79,7 +81,7 @@ function PokemonDetail(){
                                 
                         </div>
                         <div className="image-detail-container">
-                            <img className="img-profile" src={pokemonDetail.imgProfile}></img>
+                            <img className="img-profile" src={pokemonDetail.imgProfile !== undefined ? pokemonDetail.imgProfile : profileDefault}></img>
                         </div>
                     </div>
 

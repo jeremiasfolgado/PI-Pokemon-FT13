@@ -1,0 +1,28 @@
+.footer-container{
+    width: 100%;
+    height: 10%;
+    
+    background-color:rgba(96, 96, 96, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-name{
+    font-family: 'Montserrat', sans-serif;
+    text-transform:uppercase;
+    font-weight: 700;
+    color: #cccccc;
+    font-size: 1.2rem;
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+}
+.footer-text{
+    font-family: 'Montserrat', sans-serif;
+    /* text-transform:uppercase; */
+    font-weight: 400;
+    color: #cccccc;
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}

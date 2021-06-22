@@ -6,6 +6,8 @@ import PokemonDetail from './components/PokemonDetail/PokemonDetail.js';
 // import SearchBar from './components/SearchBar/SearchBar.js';
 import PostPokemon from './components/PostNewPokemon/PostPokemon';
 import FirstPage from './components/FirstPage/FirstPage';
+import Footer from './components/Footer/Footer.js'
+import Header from './components/Header/Header';
 
 function App() {
   
@@ -13,10 +15,12 @@ function App() {
     <React.Fragment>
       
       {/* <Route path='/pokemon'component={SearchBar}/> */}
+      <Route path='/pokemon' component={Header}/>
       <Route exact path='/'component={FirstPage}/>
-      <Route exact path='/pokemon/input'component={PostPokemon}/>
+      <Route exact path='/pokemon/input/form'component={PostPokemon}/>
       <Route exact path='/pokemon' component={Home}/>
-      <Route  path='/pokemon/:id' component={PokemonDetail}/>
+      <Route  exact path='/pokemon/:id' component={PokemonDetail}/>
+      <Route path='/pokemon'component={Footer}/>
     </React.Fragment>
   );
 }

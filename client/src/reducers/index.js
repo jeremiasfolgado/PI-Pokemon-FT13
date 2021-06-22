@@ -72,14 +72,14 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 pokemons: [...state.pokemons.sort((a,b) => a.attack - b.attack)], 
-                pokemonsFiltered: !!state.pokemonsFiltered && [...state.pokemonsFiltered.sort((a,b) => a.attack - b.attack)]
+                pokemonsFiltered: !!state.pokemonsFiltered ? [...state.pokemonsFiltered.sort((a,b) => a.attack - b.attack)] : undefined
             }
         }
         case ORDER_BY_ATTACK_DESC:{
             return {
                 ...state,
                 pokemons: [...state.pokemons.sort((a,b) => b.attack - a.attack)],
-                pokemonsFiltered: !!state.pokemonsFiltered  && [...state.pokemonsFiltered.sort((a,b) => b.attack - a.attack)] 
+                pokemonsFiltered: !!state.pokemonsFiltered  ? [...state.pokemonsFiltered.sort((a,b) => b.attack - a.attack)] : undefined
             }
         }
         case ORDER_BY_TYPE:{

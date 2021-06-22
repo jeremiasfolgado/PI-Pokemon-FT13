@@ -1,10 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
 import './PokemonCard.css'
+import profileDefault from '../../resources/profile-default.png'
+
 
 export function  PokemonCard({actualList}){
     
-    
+   
     return (
        <div className="pokemons-cards-cotainer">
            {
@@ -12,8 +14,8 @@ export function  PokemonCard({actualList}){
                   
                   <Link to={`/pokemon/${pokemon.id}`} key={pokemon.id} className="link card-container">
                            <div  className="picture-container">
-                               <img src={pokemon.img} className="profile-image"></img>   
-                               
+                               <img src={pokemon.img !== undefined ? pokemon.img : profileDefault} className="profile-image"></img>   
+                            
                            </div>
                               
                            <div className="description-container">

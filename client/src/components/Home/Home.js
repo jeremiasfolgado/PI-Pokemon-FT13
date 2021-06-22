@@ -61,7 +61,7 @@ export function Home (){
                         <SearchBar/>
                         
                         <div className="btn-container">
-                            <Link to='/pokemon/input' >
+                            <Link to='/pokemon/input/form' >
                             <button className="btn">
                                 Add Pokemon   
                             </button>

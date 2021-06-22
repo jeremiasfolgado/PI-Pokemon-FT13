@@ -37,6 +37,7 @@ export function getPokemonDetail(id) {
   return function(dispatch) {
       axios.get(`http://localhost:3001/pokemons/${id}`)
         .then(response =>{
+          console.log(response.data)
           dispatch({type:GET_POKEMON_DETAIL, payload: response.data})
         })
         .catch(error => {
